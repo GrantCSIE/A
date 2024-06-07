@@ -15,19 +15,31 @@
 > [!Note]  
 > **This baseline is based on the code released by the original author of [BoT-SORT](https://github.com/NirAharon/BoT-SORT). Special thanks for their release.**
 
-
 > [!WARNING]
 >  - **This baseline only provides single-camera object tracking and does not include cross-camera association.**
 >  - **Due to our dataset's low frame rate (fps: 1), we have disabled the Kalman filter in BoT-SORT. Low frame rates can cause the Kalman filter to deviate, hence we only used appearance features for tracking in this baseline.**
 
 ## Download weight
-> [!IMPORTANT]
-> [Our best weight](https://drive.google.com/file/d/1l8pfeLYgS-UnfB9-w4QSCWbiEFmA01h9/view?usp=sharing)
-> - *Step 1*: download out best weight
-> - Create a folder: **pretrained**
-> - Put weight into the pretrained folder
+> 
+> - **Step 1**: Download our best weight: [https://drive.google.com/file/d/1l8pfeLYgS-UnfB9-w4QSCWbiEFmA01h9/view?usp=sharing](https://drive.google.com/file/d/1l8pfeLYgS-UnfB9-w4QSCWbiEFmA01h9/view?usp=sharing)
+> - **Step 2**: Create a folder: **pretrained**
+> - **Step 3**: Put weight into the pretrained folder
 
+## Repository structure
 
+```python
+├─ assets
+├─ demo_readme
+├─ fast_reid
+├─ logs
+├─ pretrained    # This is new created folder
+│  └── best.pt
+├─ tools
+├─ tracker
+├─ VideoCameraCorrection
+├─ yolov7
+└─ yolox
+```
 
 ## ToDo
 - [x] Complete evaluation guide
@@ -53,7 +65,7 @@ conda create -n botsort python=3.7
 conda activate botsort
 ```
 **Step 2.** Install torch and matched torchvision from [pytorch.org](https://pytorch.org/get-started/locally/).<br>
-The code was tested using torch 1.11.0+cu113 and torchvision==0.12.0 
+The code was tested using torch 1.11.0 and torchvision==0.12.0 
 
 **Step 3.** Fork this Repository and clone your Repository to your device
 
@@ -69,7 +81,7 @@ pip install -r requirements.txt
 
 **Step 6.** Install [pycocotools](https://github.com/cocodataset/cocoapi).
 ```shell
-pip install cython; pip3 install 'git+https://github.com/cocodataset/cocoapi.git#subdirectory=PythonAPI'
+pip install cython; pip install git+https://github.com/philferriere/cocoapi.git#subdirectory=PythonAPI
 ```
 
 **Step 7.** Others
