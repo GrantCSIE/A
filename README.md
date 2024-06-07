@@ -1,5 +1,8 @@
 # AICUP Baseline: BoT-SORT
 
+
+> [**https://jimmyswebnote.com/how-to-git/**](https://jimmyswebnote.com/how-to-git/)
+
 > [**BoT-SORT: Robust Associations Multi-Pedestrian Tracking**](https://arxiv.org/abs/2206.14651)
 > 
 > Nir Aharon, Roy Orfaig, Ben-Zion Bobrovsky
@@ -8,13 +11,19 @@
 
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/bot-sort-robust-associations-multi-pedestrian/multi-object-tracking-on-mot20-1)](https://paperswithcode.com/sota/multi-object-tracking-on-mot20-1?p=bot-sort-robust-associations-multi-pedestrian)
 
-> [!IMPORTANT]  
+
+> [!Note]  
 > **This baseline is based on the code released by the original author of [BoT-SORT](https://github.com/NirAharon/BoT-SORT). Special thanks for their release.**
 
 
 > [!WARNING]
 >  - **This baseline only provides single-camera object tracking and does not include cross-camera association.**
 >  - **Due to our dataset's low frame rate (fps: 1), we have disabled the Kalman filter in BoT-SORT. Low frame rates can cause the Kalman filter to deviate, hence we only used appearance features for tracking in this baseline.**
+
+## Please download weight!!
+> [!IMPORTANT]
+> [Our best weight](https://drive.google.com/file/d/1l8pfeLYgS-UnfB9-w4QSCWbiEFmA01h9/view?usp=sharing) 
+
 
 
 ## ToDo
@@ -70,75 +79,6 @@ pip install faiss-cpu
 pip install faiss-gpu
 ```
 
-## Data Preparation
-
-Download the AI_CUP dataset, the original dataset structure is:
-```python
-├── train
-│   ├── images
-│   │   ├── 0902_150000_151900 (Timestamp: Date_StartTime_EndTime)
-│   │   │  ├── 0_00001.jpg (CamID_FrameNum)
-│   │   │  ├── 0_00002.jpg
-│   │   │  ├── ...
-│   │   │  ├── 1_00001.jpg (CamID_FrameNum)
-│   │   │  ├── 1_00002.jpg
-│   │   │  ├── ...
-│   │   │  ├── 7_00001.jpg (CamID_FrameNum)
-│   │   │  ├── 7_00002.jpg
-│   │   ├── 0902_190000_191900 (Timestamp: Date_StartTime_EndTime)
-│   │   │  ├── 0_00001.jpg (CamID_FrameNum)
-│   │   │  ├── 0_00002.jpg
-│   │   │  ├── ...
-│   │   │  ├── 1_00001.jpg (CamID_FrameNum)
-│   │   │  ├── 1_00002.jpg
-│   │   │  ├── ...
-│   │   │  ├── 7_00001.jpg (CamID_FrameNum)
-│   │   │  ├── 7_00002.jpg
-│   │   ├── ...
-│   └── labels
-│   │   ├── 0902_150000_151900 (Timestamp: Date_StartTime_EndTime)
-│   │   │  ├── 0_00001.txt (CamID_FrameNum)
-│   │   │  ├── 0_00002.txt
-│   │   │  ├── ...
-│   │   │  ├── 1_00001.txt (CamID_FrameNum)
-│   │   │  ├── 1_00002.txt
-│   │   │  ├── ...
-│   │   │  ├── 7_00001.txt (CamID_FrameNum)
-│   │   │  ├── 7_00002.txt
-│   │   ├── 0902_190000_191900 (Timestamp: Date_StartTime_EndTime)
-│   │   │  ├── 0_00001.txt (CamID_FrameNum)
-│   │   │  ├── 0_00002.txt
-│   │   │  ├── ...
-│   │   │  ├── 1_00001.txt (CamID_FrameNum)
-│   │   │  ├── 1_00002.txt
-│   │   │  ├── ...
-│   │   │  ├── 7_00001.txt (CamID_FrameNum)
-│   │   │  ├── 7_00002.txt
-│   │   ├── ...
---------------------------------------------------
-├── test
-│   ├── images
-│   │   ├── 0902_150000_151900 (Timestamp: Date_StartTime_EndTime)
-│   │   │  ├── 0_00001.jpg (CamID_FrameNum)
-│   │   │  ├── 0_00002.jpg
-│   │   │  ├── ...
-│   │   │  ├── 1_00001.jpg (CamID_FrameNum)
-│   │   │  ├── 1_00002.jpg
-│   │   │  ├── ...
-│   │   │  ├── 7_00001.jpg (CamID_FrameNum)
-│   │   │  ├── 7_00002.jpg
-│   │   ├── 0902_190000_191900 (Timestamp: Date_StartTime_EndTime)
-│   │   │  ├── 0_00001.jpg (CamID_FrameNum)
-│   │   │  ├── 0_00002.jpg
-│   │   │  ├── ...
-│   │   │  ├── 1_00001.jpg (CamID_FrameNum)
-│   │   │  ├── 1_00002.jpg
-│   │   │  ├── ...
-│   │   │  ├── 7_00001.jpg (CamID_FrameNum)
-│   │   │  ├── 7_00002.jpg
-│   │   ├── ...
-```
-
 ### Ground Truth Format
 Each image corresponds to a text file, an example is provided below:
 
@@ -173,69 +113,6 @@ python fast_reid/datasets/generate_AICUP_patches.py --data_path <dataets_dir>/AI
 
 > [!TIP]
 > You can link dataset to FastReID ```export FASTREID_DATASETS=<BoT-SORT_dir>/fast_reid/datasets```. If left unset, the default is `fast_reid/datasets` 
-
-
-### Prepare YOLOv7 Dataset
-
-> [!WARNING]
-> We only implemented the fine-tuning interface for `yolov7`
-> If you need to change the object detection model, please do it yourself.
-
-run the `yolov7/tools/AICUP_to_YOLOv7.py` by the following command:
-```
-cd <BoT-SORT_dir>
-python yolov7/tools/AICUP_to_YOLOv7.py --AICUP_dir datasets/AI_CUP_MCMOT_dataset/train --YOLOv7_dir datasets/AI_CUP_MCMOT_dataset/yolo
-```
-The file tree after conversion by `AICUP_to_YOLOv7.py` is as follows:
-
-```python
-/datasets/AI_CUP_MCMOT_dataset/yolo
-    ├── train
-    │   ├── images
-    │   │   ├── 0902_150000_151900_0_00001.jpg (Date_StartTime_EndTime_CamID_FrameNum)
-    │   │   ├── 0902_150000_151900_0_00002.jpg
-    │   │   ├── ...
-    │   │   ├── 0902_150000_151900_7_00001.jpg
-    │   │   ├── 0902_150000_151900_7_00002.jpg
-    │   │   ├── ...
-    │   └── labels
-    │   │   ├── 0902_150000_151900_0_00001.txt (Date_StartTime_EndTime_CamID_FrameNum)
-    │   │   ├── 0902_150000_151900_0_00002.txt
-    │   │   ├── ...
-    │   │   ├── 0902_150000_151900_7_00001.txt
-    │   │   ├── 0902_150000_151900_7_00002.txt
-    │   │   ├── ...
-    ├── valid
-    │   ├── images
-    │   │   ├── 1015_190000_191900_0_00001.jpg (Date_StartTime_EndTime_CamID_FrameNum)
-    │   │   ├── 1015_190000_191900_0_00002.jpg
-    │   │   ├── ...
-    │   │   ├── 1015_190000_191900_7_00001.jpg
-    │   │   ├── 1015_190000_191900_7_00002.jpg
-    │   │   ├── ...
-    │   └── labels
-    │   │   ├── 1015_190000_191900_0_00001.txt (Date_StartTime_EndTime_CamID_FrameNum)
-    │   │   ├── 1015_190000_191900_0_00002.txt
-    │   │   ├── ...
-    │   │   ├── 1015_190000_191900_7_00001.txt
-    │   │   ├── 1015_190000_191900_7_00002.txt
-    │   │   ├── ...
-```
-
-
-## Model Zoo for MOT17 & COCO
-> [!TIP]
-> We recommend using YOLOv7 as the object detection model for tracking
-
-Download and store the trained models in 'pretrained' folder as follows:
-```
-<BoT-SORT_dir>/pretrained
-```
-- We used the publicly available [ByteTrack](https://github.com/ifzhang/ByteTrack) model zoo trained on MOT17, MOT20 and ablation study for YOLOX object detection.
-
-- Author's trained ReID models can be downloaded from [MOT17-SBS-S50](https://drive.google.com/file/d/1QZFWpoa80rqo7O-HXmlss8J8CnS7IUsN/view?usp=sharing), [MOT20-SBS-S50](https://drive.google.com/file/d/1KqPQyj6MFyftliBHEIER7m_OrGpcrJwi/view?usp=sharing).
-
-- For multi-class MOT use [YOLOX](https://github.com/Megvii-BaseDetection/YOLOX) or [YOLOv7](https://github.com/WongKinYiu/yolov7) trained on COCO (or any custom weights). 
 
 ## Training (Fine-tuning)
 
