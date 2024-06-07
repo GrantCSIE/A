@@ -20,9 +20,12 @@
 >  - **This baseline only provides single-camera object tracking and does not include cross-camera association.**
 >  - **Due to our dataset's low frame rate (fps: 1), we have disabled the Kalman filter in BoT-SORT. Low frame rates can cause the Kalman filter to deviate, hence we only used appearance features for tracking in this baseline.**
 
-## Please download weight!!
+## Download weight
 > [!IMPORTANT]
-> [Our best weight](https://drive.google.com/file/d/1l8pfeLYgS-UnfB9-w4QSCWbiEFmA01h9/view?usp=sharing) 
+> [Our best weight](https://drive.google.com/file/d/1l8pfeLYgS-UnfB9-w4QSCWbiEFmA01h9/view?usp=sharing)
+> - *Step 1*: download out best weight
+> - Create a folder: **pretrained**
+> - Put weight into the pretrained folder
 
 
 
