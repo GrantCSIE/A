@@ -16,7 +16,7 @@ MODEL:
     WITH_BNNECK: True
     POOL_LAYER: GlobalAvgPool
     NECK_FEAT: before
-    CLS_LAYER: Linear
+    CLS_LAYER: ArcSoftmax
 
   LOSSES:
     NAME: ("CrossEntropyLoss", "TripletLoss",)

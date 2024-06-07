@@ -33,4 +33,4 @@ TEST:
   EVAL_PERIOD: 60 # We didn't provide eval dataset
   IMS_PER_BATCH: 256
 
-OUTPUT_DIR: logs/AICUP_115/bagtricks_R50-ibn
+OUTPUT_DIR: logs/AICUP_115/bagtricks_R50_2-ibn
